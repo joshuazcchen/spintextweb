@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+		background: black;
+		margin: 0;
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh; 
+	}
+	#display {
+		color: #00ff00;
+		font-family: 'Courier New',monospace;
+		font-size: 1.2vh; 
+		line-height: 1; 
+		white-space: pre; 
+	}
+    </style>
+</head>
+<body>
+	<pre id="display"></pre>
+	<script>
+		function getUrlParams() {
+			var params = new URLSearchParams(window.location.search).get('params');
+			if (!params) return ["CORGI", "1.0", "1.5", "0.5"];
+			return params.split('-');
+		}
+		var display = document.getElementById('display');
+		var frameBuffer = "";
+		var Module = {
+			arguments: getUrlParams(),
+			print: function(text) {
+				frameBuffer += text + "\n";
+			},
+			printErr: function(text) { console.error(text); }
+		};
+
+		setInterval(function() {
+			if (frameBuffer.length > 0) {
+				display.textContent = frameBuffer.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '');
+				if (frameBuffer.length > 12500) { 
+                			frameBuffer = "";
+            			}
+			}
+		}, 25);
+	</script>
+	<script src="spintext.js"></script>
+</body>
+</html>
