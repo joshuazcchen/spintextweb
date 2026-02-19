@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include <unistd.h>
-#include <ctype.h>
 #include <stdlib.h>
-#include <signal.h>
 #include <emscripten.h>
+#include <ctype.h>
 
 #define WIDTH 200
 #define HEIGHT 80
@@ -56,13 +54,7 @@ int font[36][5][5] = {
 	{{0, 1, 1, 1, 0}, {1, 0, 0, 0, 1}, {0, 1, 1, 1, 1}, {0, 0, 0, 0, 1}, {0, 1, 1, 1, 0}}  // 9
 };
 
-void handle_sigint(int sig) {
-	printf("\x1b[?25h\x1b[33m\nTerminating with code\x1b[35m %d\n\x1b[0m", sig);
-	exit(0);
-}
-
 int main(int argc, char *argv[]) {
-	signal(SIGINT, handle_sigint);
 	char *text = (argc <= 1) ? "CORGI" : argv[1];
 	float tilt = (argc <= 2) ? 1.0f : strtof(argv[2], NULL);
 	float spin = (argc <= 3) ? 1.0f : strtof(argv[3], NULL);
