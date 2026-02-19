@@ -9,7 +9,7 @@ You can modify the params within your web browser with the `?params=(str)TEXT-(f
 The WASM and JS code are compiled directly from the slightly modified spintext.c code using Emscripten with the following flags:
 `-sASYNCIFY -sEXPORTED_RUNTIME_METHODS=ccall -sFORCE_FILESYSTEM`
 
-![image of spinning text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY242YjlzOTlzeTgzMWdrc2plY3VqZXZzajAwbmRyNHNvMHFhbWh4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1LI3ZLDnyFnadsIXPQ/giphy.gif)
+![image of spinning text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY242YjlzOTlzeTgzMWdrc2plY3VqZXZzajAwbmRyNHNvMHFhbWh4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1LI3ZLDnyFnadsIXPQ/giphy.gif).
 
 I would absolutely **NOT** put this into another webpage with other things going on, or at the very least I would decrease the width/height and increase the step in the for loops such that it draws the overall text spin smaller.
 
