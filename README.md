@@ -2,7 +2,7 @@
 
 The web version of the spintext.c code. This code is heavily inspired by the donut.c spinning code, but focuses on spinning text as opposed to a donut. The web version preserves the majority of the functionality, but loses terminal based formatting (ie. colours beyond single colour, bold/faint text, etc.).
 
-## A public web version is available on my website @ joshuazc.com/spinningtext/?params
+## A public web version is available on my website @ spintext.joshuazc.com/?params
 
 The WASM and JS code are compiled directly from the slightly modified spintext.c code using Emscripten with the following flags:
 `-sASYNCIFY -sEXPORTED_RUNTIME_METHODS=ccall -sFORCE_FILESYSTEM`
