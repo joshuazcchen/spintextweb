@@ -27,11 +27,21 @@
 	    font-size: 14px;
 	    letter-spacing: 1px;
 	    z-index: 9999;
+	.sourcecode {
+	    position: fixed;
+	    bottom: 20px;
+	    right: 20px;
+	    color: #00ff00;
+	    font-family: 'Courier New', Courier, monospace;
+	    font-size: 14px;
+	    letter-spacing: 1px;
+	    z-index: 9999;
     </style>
 </head>
 <body>
 	<pre id="display"></pre>
 	<a href="https://joshuazc.com" target="_blank" rel="noopener noreferrer"><div class="watermark">page by joshua chen</div></a>
+	<a href="https://github.com/joshuazcchen/spintextweb/" target="_blank" rel="noopener noreferrer"><div class="sourcecode">view source code</div></a>
 	<script>
 		function getUrlParams() {
 			var params = new URLSearchParams(window.location.search).get('params');
