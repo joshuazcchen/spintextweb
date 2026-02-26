@@ -5,7 +5,7 @@
 #include <emscripten.h>
 #include <ctype.h>
 
-#define WIDTH 200
+#define WIDTH 210
 #define HEIGHT 80
 #define LUT_SIZE 360
 
