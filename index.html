@@ -2,14 +2,16 @@
 <html>
 <head>
     <style>
-        body {
+       	html, body {
 		background: black;
 		margin: 0;
 		overflow: hidden;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100%; 
+		height: 100%;
+		width: 100%;
+		position: relative;
 	}
 	#display {
 		color: #00ff00;
@@ -17,26 +19,28 @@
 		font-size: 1.0vh; 
 		line-height: 1; 
 		white-space: pre; 
+		height: 100%;
+		width: 100%;
 	}
 	.watermark {
-	    position: fixed;
-	    bottom: 20px;
-	    left: 20px;
-	    color: #00ff00;
-	    font-family: 'Courier New', Courier, monospace;
-	    font-size: 14px;
-	    letter-spacing: 1px;
-	    z-index: 9999;
+		position: fixed;
+		bottom: 20px;
+		left: 20px;
+		color: #00ff00;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 14px;
+		letter-spacing: 1px;
+		z-index: 9999;
 	}
 	.sourcecode {
-	    position: fixed;
-	    bottom: 20px;
-	    right: 20px;
-	    color: #00ff00;
-	    font-family: 'Courier New', Courier, monospace;
-	    font-size: 14px;
-	    letter-spacing: 1px;
-	    z-index: 9999;
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		color: #00ff00;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 14px;
+		letter-spacing: 1px;
+		z-index: 9999;
 	}
     </style>
 </head>
@@ -64,8 +68,8 @@
 			if (frameBuffer.length > 0) {
 				display.textContent = frameBuffer.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '');
 				if (frameBuffer.length > 12500) { 
-                			frameBuffer = "";
-            			}
+					frameBuffer = "";
+				}
 			}
 		}, 25);
 	</script>
