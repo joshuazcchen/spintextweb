@@ -7,7 +7,6 @@
 
 #define WIDTH 200
 #define HEIGHT 80
-#define CAMERA_DISTANCE 10.0
 #define LUT_SIZE 360
 
 float sin_lut[LUT_SIZE];
@@ -59,6 +58,7 @@ int main(int argc, char *argv[]) {
 	float tilt = (argc <= 2) ? 1.0f : strtof(argv[2], NULL);
 	float spin = (argc <= 3) ? 1.0f : strtof(argv[3], NULL);
 	float roll = (argc <= 4) ? 1.0f : strtof(argv[4], NULL);
+	float cam_dist = (argc <= 5) ? 10.0f : strtof(argv[5], NULL); 
 	int len = strlen(text);
 	char shades[] = ".,-~:;=!*#$@";
 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
 						for (float z = -0.2; z <= 0.2; z += 0.08) {
 							for (float fx = 0.0; fx < 1.0; fx += 0.08) {
 								for (float fy = 0.0; fy < 1.0; fy += 0.08) {
-									float offset = (len * 6.0) / 2.0;
+									float offset = (len * 5.0) / 2.0;
 									float px = (x + fx) + (l * 6.0) - offset;
 									float py = (y + fy) - 2.5;
 									float pz = z;
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
 									float x3 = x2 * cos_lut[iC] - y1 * sin_lut[iC];
 									float y3 = x2 * sin_lut[iC] + y1 * cos_lut[iC];
 
-									float camera_dist = CAMERA_DISTANCE + (len * 5.0);
+									float camera_dist = cam_dist;
 									float ooz = 1.0 / (z2 + camera_dist);
 
 									int xp = (int) (WIDTH / 2 + zoom_x * ooz * x3);
