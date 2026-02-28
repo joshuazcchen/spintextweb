@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 	float tilt = (argc <= 2) ? 1.0f : strtof(argv[2], NULL);
 	float spin = (argc <= 3) ? 1.0f : strtof(argv[3], NULL);
 	float roll = (argc <= 4) ? 1.0f : strtof(argv[4], NULL);
-	float cam_dist = (argc <= 5) ? 0.0f : strtof(argv[4], NULL);
+	float cam_dist = (argc <= 5) ? 0.0f : strtof(argv[5], NULL);
 	int len = strlen(text);
 	char shades[] = ".,-~:;=!*#$@";
 
