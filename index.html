@@ -2,24 +2,21 @@
 <html>
 <head>
     <style>
-       	html, body {
+        body {
 		background: black;
 		margin: 0;
 		overflow: hidden;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100%;
-		width: 100%;
-		position: relative;
+		height: 100vh; 
 	}
 	#display {
 		color: #00ff00;
 		font-family: 'Courier New',monospace;
-		font-size: 1.0vw; 
+		font-size: 1.2vh; 
 		line-height: 1; 
 		white-space: pre; 
-		height: 100%;
 	}
 	.watermark {
 	    position: fixed;
@@ -30,6 +27,7 @@
 	    font-size: 14px;
 	    letter-spacing: 1px;
 	    z-index: 9999;
+	}
 	.sourcecode {
 	    position: fixed;
 	    bottom: 20px;
@@ -39,6 +37,7 @@
 	    font-size: 14px;
 	    letter-spacing: 1px;
 	    z-index: 9999;
+	}
     </style>
 </head>
 <body>
@@ -65,8 +64,8 @@
 			if (frameBuffer.length > 0) {
 				display.textContent = frameBuffer.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '');
 				if (frameBuffer.length > 12500) { 
-					frameBuffer = "";
-				}
+                			frameBuffer = "";
+            			}
 			}
 		}, 25);
 	</script>
