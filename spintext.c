@@ -59,6 +59,7 @@ int main(int argc, char *argv[]) {
 	float tilt = (argc <= 2) ? 1.0f : strtof(argv[2], NULL);
 	float spin = (argc <= 3) ? 1.0f : strtof(argv[3], NULL);
 	float roll = (argc <= 4) ? 1.0f : strtof(argv[4], NULL);
+	float cam_dist = (argc <= 5) ? 0.0f : strtof(argv[4], NULL);
 	int len = strlen(text);
 	char shades[] = ".,-~:;=!*#$@";
 
@@ -108,7 +109,7 @@ int main(int argc, char *argv[]) {
 									float x3 = x2 * cos_lut[iC] - y1 * sin_lut[iC];
 									float y3 = x2 * sin_lut[iC] + y1 * cos_lut[iC];
 
-									float camera_dist = CAMERA_DISTANCE + (len * 5.0);
+									float camera_dist = (cam_dist != 0.0) ? cam_dist : (CAMERA_DISTANCE + (len * 5.0));
 									float ooz = 1.0 / (z2 + camera_dist);
 
 									int xp = (int) (WIDTH / 2 + zoom_x * ooz * x3);
