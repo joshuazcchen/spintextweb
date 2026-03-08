@@ -9,7 +9,7 @@ The WASM and JS code are compiled directly from the slightly modified spintext.c
 
 ![image of spinning text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY242YjlzOTlzeTgzMWdrc2plY3VqZXZzajAwbmRyNHNvMHFhbWh4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1LI3ZLDnyFnadsIXPQ/giphy.gif).
 
-You can modify the params within your web browser with the `?params=(str)TEXT-(float)TILT-(float)SPIN-(float)ROLL` tags.  
+You can modify the params within your web browser with the `?params=(str)TEXT-(float)TILT-(float)SPIN-(float)ROLL-(float)PACE` tags.  
 All calculations are done on the clientside, this code has **not** been tested on many devices for optimization.  
 The functionality has been confirmed on MacOS, iOS and Windows 11.  
 
