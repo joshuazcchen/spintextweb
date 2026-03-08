@@ -7,7 +7,7 @@
 
 #define WIDTH 200
 #define HEIGHT 80
-#define CAMERA_DISTANCE 10.0
+#define CAMERA_DISTANCE 40.0
 #define LUT_SIZE 360
 
 float sin_lut[LUT_SIZE];
@@ -18,13 +18,13 @@ char buffer[WIDTH * HEIGHT];
 int font[36][5][5] = {
 	{{0, 1, 1, 1, 0}, {1, 0, 0, 0, 1}, {1, 1, 1, 1, 1}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}}, // A
 	{{1, 1, 1, 1, 0}, {1, 0, 0, 0, 1}, {1, 1, 1, 1, 0}, {1, 0, 0, 0, 1}, {1, 1, 1, 1, 0}}, // B
-	{{0, 1, 1, 1, 1}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {0, 1, 1, 1, 1}}, // C
+	{{0, 1, 1, 1, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {0, 1, 1, 1, 0}}, // C
 	{{1, 1, 1, 0, 0}, {1, 0, 0, 1, 0}, {1, 0, 0, 1, 0}, {1, 0, 0, 1, 0}, {1, 1, 1, 0, 0}}, // D
 	{{1, 1, 1, 1, 1}, {1, 0, 0, 0, 0}, {1, 1, 1, 1, 0}, {1, 0, 0, 0, 0}, {1, 1, 1, 1, 1}}, // E
 	{{1, 1, 1, 1, 1}, {1, 0, 0, 0, 0}, {1, 1, 1, 0, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}}, // F
 	{{0, 1, 1, 1, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 1, 1}, {1, 0, 0, 0, 1}, {0, 1, 1, 1, 0}}, // G
 	{{1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}, {1, 1, 1, 1, 1}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}}, // H
-	{{1, 1, 1, 1, 1}, {0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}, {1, 1, 1, 1, 1}}, // I
+	{{0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}}, // I
 	{{0, 0, 1, 1, 1}, {0, 0, 0, 1, 0}, {0, 0, 0, 1, 0}, {1, 0, 0, 1, 0}, {0, 1, 1, 0, 0}}, // J
 	{{1, 0, 0, 0, 1}, {1, 0, 0, 1, 0}, {1, 1, 1, 0, 0}, {1, 0, 0, 1, 0}, {1, 0, 0, 0, 1}}, // K
 	{{1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {1, 1, 1, 1, 1}}, // L
@@ -59,7 +59,8 @@ int main(int argc, char *argv[]) {
 	float tilt = (argc <= 2) ? 1.0f : strtof(argv[2], NULL);
 	float spin = (argc <= 3) ? 1.0f : strtof(argv[3], NULL);
 	float roll = (argc <= 4) ? 1.0f : strtof(argv[4], NULL);
-	float cam_dist = (argc <= 5) ? 0.0f : strtof(argv[5], NULL);
+	float pace = (argc <= 5) ? 0.0f : strtof(argv[5], NULL);
+	float cam_dist = (argc <= 6) ? 40.0f : strtof(argv[6], NULL);
 	int len = strlen(text);
 	char shades[] = ".,-~:;=!*#$@";
 
@@ -71,7 +72,7 @@ int main(int argc, char *argv[]) {
 		cos_lut[i] = cos(i * 0.017453f);
 	}
 
-	float A = 0, B = 0, C = 0;
+	float A = 0, B = 0, C = 0, D = 0;
 
 	while (1) {
 		memset(buffer, ' ', WIDTH * HEIGHT);
@@ -93,10 +94,9 @@ int main(int argc, char *argv[]) {
 						for (float z = -0.2; z <= 0.2; z += 0.08) {
 							for (float fx = 0.0; fx < 1.0; fx += 0.08) {
 								for (float fy = 0.0; fy < 1.0; fy += 0.08) {
-									float offset = (len * 6.0) / 2.0;
-									float px = (x + fx) + (l * 6.0) - offset;
+									float px = (x + fx) + (l * 6.0) - (len * 6.0) / 2.0; 
 									float py = (y + fy) - 2.5;
-									float pz = z;
+									float pz = (z + D); 
 
 									int iA = (A >= 0.0) ? (int) A % 360 : (int) ((int) A % 360) + 360.0;
 									int iB = (B >= 0.0) ? (int) B % 360 : (int) ((int) B % 360) + 360.0;
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
 									float x3 = x2 * cos_lut[iC] - y1 * sin_lut[iC];
 									float y3 = x2 * sin_lut[iC] + y1 * cos_lut[iC];
 
-									float camera_dist = (cam_dist != 0.0) ? cam_dist : (CAMERA_DISTANCE + (len * 5.0));
+									float camera_dist = CAMERA_DISTANCE;
 									float ooz = 1.0 / (z2 + camera_dist);
 
 									int xp = (int) (WIDTH / 2 + zoom_x * ooz * x3);
@@ -124,7 +124,9 @@ int main(int argc, char *argv[]) {
 											if (L < 0) L = 0;
 											if (L > 11) L = 11;
 											if (L > max_shade) L = max_shade;
-											buffer[loc] = shades[L];										}
+
+											buffer[loc] = shades[L];
+										}
 									}
 								}
 							}
@@ -133,6 +135,7 @@ int main(int argc, char *argv[]) {
 				}
 			}
 		} // holy this is a lot of loops ending
+
 		printf("\n");
 
 		for (int k = 0; k < WIDTH * HEIGHT; k++) {
@@ -148,6 +151,8 @@ int main(int argc, char *argv[]) {
 		A += tilt;
 		B += spin;
 		C += roll;
+		D += pace;
+		pace = (D <= -20 || D >= 20) ? pace * -1 : pace;
 
 		emscripten_sleep(25);
 	}
