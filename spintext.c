@@ -7,7 +7,6 @@
 
 #define WIDTH 200
 #define HEIGHT 80
-#define CAMERA_DISTANCE 40.0
 #define LUT_SIZE 360
 
 float sin_lut[LUT_SIZE];
@@ -109,7 +108,7 @@ int main(int argc, char *argv[]) {
 									float x3 = x2 * cos_lut[iC] - y1 * sin_lut[iC];
 									float y3 = x2 * sin_lut[iC] + y1 * cos_lut[iC];
 
-									float camera_dist = CAMERA_DISTANCE;
+									float camera_dist = cam_dist;
 									float ooz = 1.0 / (z2 + camera_dist);
 
 									int xp = (int) (WIDTH / 2 + zoom_x * ooz * x3);
