@@ -83,6 +83,7 @@ body {
 	#update-btn {
 		font-family: 'Courier New', Courier, monospace;
 		color: #00ff00;
+		border: none;
 		background: #08170a;
 		padding: 5px;
 		width: 70%;
@@ -106,9 +107,10 @@ body {
 		</div>
 		<a href="https://github.com/joshuazcchen/spintextweb/" target="_blank" rel="noopener noreferrer"><div class="sourcecode">view source code</div></a>
 		<script>
+			const defaultParams = ["CORGI", "1.0", "1.5", "0.5", "0", "30"];
 			function getUrlParams() {
 				var params = new URLSearchParams(window.location.search).get('params');
-				if (!params) return ["CORGI", "1.0", "1.5", "0.5", "0", "30"];
+				if (!params) return defaultParams;
 				return params.split('-');
 			}
 			const toggleBtn = document.getElementById('toggle');
@@ -118,7 +120,7 @@ body {
 			const currentParams = getUrlParams();
 			const ids = ['p-text', 'p-spin', 'p-roll', 'p-tilt', 'p-pace', 'p-dist'];
 			ids.forEach((id, i) => {
-				if (currentParams[i]) document.getElementById(id).placeholder = currentParams[i];
+				if (currentParams[i]) document.getElementById(id).placeholder = (currentParams[i] != defaultParams[i] ? currentParams[i] : ids[i].substring(2));
 			});
 			updateBtn.onclick = function() {
 				const vals = ids.map(id => {
