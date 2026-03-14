@@ -125,7 +125,7 @@ body {
 			updateBtn.onclick = function() {
 				const vals = ids.map(id => {
 					const val = document.getElementById(id).value;
-					return val.trim() !== "" ? val : document.getElementById(id).placeholder;
+					return val.trim() !== "" ? val : (id == "p-dist" ? 30 : document.getElementById(id).placeholder); 
 				});
 
 				const paramString = vals.join('-');
