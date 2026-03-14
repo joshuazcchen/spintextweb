@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        body {
-		background: black;
-		margin: 0;
-		overflow: hidden;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100vh; 
-	}
+	<head>
+		<style>
+body {
+	background: black;
+	margin: 0;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh; 
+}
+
+	.hidden { display: none !important; }
+
 	#display {
 		color: #00ff00;
 		font-family: 'Courier New',monospace;
@@ -19,56 +22,129 @@
 		white-space: pre; 
 	}
 	.watermark {
-	    position: fixed;
-	    bottom: 20px;
-	    left: 20px;
-	    color: #00ff00;
-	    font-family: 'Courier New', Courier, monospace;
-	    font-size: 14px;
-	    letter-spacing: 1px;
-	    z-index: 9999;
+		position: fixed;
+		bottom: 20px;
+		left: 20px;
+		color: #00ff00;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 14px;
+		letter-spacing: 1px;
+		z-index: 9999;
 	}
 	.sourcecode {
-	    position: fixed;
-	    bottom: 20px;
-	    right: 20px;
-	    color: #00ff00;
-	    font-family: 'Courier New', Courier, monospace;
-	    font-size: 14px;
-	    letter-spacing: 1px;
-	    z-index: 9999;
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		color: #00ff00;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 14px;
+		letter-spacing: 1px;
+		z-index: 9999;
 	}
-    </style>
-</head>
-<body>
-	<pre id="display"></pre>
-	<a href="https://joshuazc.com" target="_blank" rel="noopener noreferrer"><div class="watermark">page by joshua chen</div></a>
-	<a href="https://github.com/joshuazcchen/spintextweb/" target="_blank" rel="noopener noreferrer"><div class="sourcecode">view source code</div></a>
-	<script>
-		function getUrlParams() {
-			var params = new URLSearchParams(window.location.search).get('params');
-			if (!params) return ["CORGI", "1.0", "1.5", "0.5"];
-			return params.split('-');
-		}
-		var display = document.getElementById('display');
-		var frameBuffer = "";
-		var Module = {
-			arguments: getUrlParams(),
-			print: function(text) {
-				frameBuffer += text + "\n";
-			},
-			printErr: function(text) { console.error(text); }
-		};
+	#toggle {
+		position: fixed;
+		bottom: 15px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10001;
+		color: #00ff00;
+		background: #000000;
+		font-family: 'Courier New', Courier, monospace;
+		padding-inline: 50px;
+		font-size: 14px;
+		letter-spacing: 1px;
+		text-align: center;
+	}
 
-		setInterval(function() {
-			if (frameBuffer.length > 0) {
-				display.textContent = frameBuffer.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '');
-				if (frameBuffer.length > 12500) { 
-                			frameBuffer = "";
-            			}
+	#change-field {
+		position: fixed;
+		bottom: 70px;
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 15px;
+		z-index: 10000;
+		width: 70%;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		align-items: center;
+	}
+	.input-grid input {
+		color: #00ff00;
+		font-family: 'Courier New', Courier, monospace;
+		padding: 5px;
+		width: 80px;
+		font-size: 12px;
+	}
+
+	#update-btn {
+		font-family: 'Courier New', Courier, monospace;
+		color: #00ff00;
+		background: #08170a;
+		padding: 5px;
+		width: 70%;
+	}
+		</style>
+	</head>
+	<body>
+		<pre id="display"></pre>
+		<a href="https://joshuazc.com" target="_blank" rel="noopener noreferrer"><div class="watermark">page by joshua chen</div></a>
+		<button id="toggle">Edit</button>
+		<div id="change-field" class="hidden">
+			<div class="input-grid">
+				<input type="text" id="p-text" placeholder="text">
+				<input type="text" id="p-spin" placeholder="spin">
+				<input type="text" id="p-roll" placeholder="roll">
+				<input type="text" id="p-tilt" placeholder="tilt">
+				<input type="text" id="p-pace" placeholder="pace">
+				<input type="text" id="p-dist" placeholder="dist">
+			</div>
+			<button id="update-btn" class="ui-button">Go</button>
+		</div>
+		<a href="https://github.com/joshuazcchen/spintextweb/" target="_blank" rel="noopener noreferrer"><div class="sourcecode">view source code</div></a>
+		<script>
+			function getUrlParams() {
+				var params = new URLSearchParams(window.location.search).get('params');
+				if (!params) return ["CORGI", "1.0", "1.5", "0.5"];
+				return params.split('-');
 			}
-		}, 25);
-	</script>
-	<script src="spintext.js"></script>
-</body>
+			const toggleBtn = document.getElementById('toggle');
+			const panel = document.getElementById('change-field');
+			const updateBtn = document.getElementById('update-btn');
+			toggleBtn.onclick = () => panel.classList.toggle('hidden');
+			const currentParams = getUrlParams();
+			const ids = ['p-text', 'p-spin', 'p-roll', 'p-tilt', 'p-pace', 'p-dist'];
+			ids.forEach((id, i) => {
+				if (currentParams[i]) document.getElementById(id).placeholder = currentParams[i];
+			});
+			updateBtn.onclick = function() {
+				const vals = ids.map(id => {
+					const val = document.getElementById(id).value;
+					return val.trim() !== "" ? val : document.getElementById(id).placeholder;
+				});
+
+				const paramString = vals.join('-');
+				window.location.href = "https://spintext.joshuazc.com/?params=" + paramString;
+			};
+			var display = document.getElementById('display');
+			var frameBuffer = "";
+			var Module = {
+				arguments: getUrlParams(),
+				print: function(text) {
+					frameBuffer += text + "\n";
+				},
+				printErr: function(text) { console.error(text); }
+			};
+
+			setInterval(function() {
+				if (frameBuffer.length > 0) {
+					display.textContent = frameBuffer.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '');
+					if (frameBuffer.length > 12500) { 
+						frameBuffer = "";
+					}
+				}
+			}, 25);
+		</script>
+		<script src="spintext.js"></script>
+	</body>
 </html>
